@@ -10,4 +10,10 @@ healthzRouter.get('/_healthz', (req, res, next) => {
     });
 });
 
+healthzRouter.get('/_readyz', (req, res, next) => {
+    res.json({
+        "ok": "ok"
+    });
+});
+
 module.exports = healthzRouter;
