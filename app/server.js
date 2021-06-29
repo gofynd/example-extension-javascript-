@@ -19,7 +19,7 @@ app.use("/", fdkExtension.fdkHandler);
 
 app.use(express.static("dist"));
 app.get('*', (req, res) => {
-    res.sendFile("../dist/index.html");
+    res.sendFile(path.join(__dirname, "../dist/index.html"));
 });
 
 module.exports = app;
