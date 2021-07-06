@@ -23,3 +23,9 @@ pnpm-debug.log*
 *.sw?
 
 /dist
+
+# ignore snapshots
+__snapshots__/
+
+# ignore coverage
+coverage/
