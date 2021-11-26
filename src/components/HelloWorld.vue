@@ -1,26 +1,16 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-    <nitrozen-button :theme="'secondary'"  v-flat-btn>Click me</nitrozen-button>
   </div>
 </template>
 
 <script>
-
-import { NitrozenButton } from "@gofynd/nitrozen-vue";
-
 export default {
-  name: 'HelloWorld',
-  components: {
-    NitrozenButton
-  },
+  name: 'hello-world',
   props: {
-    msg: String
+    msg: {
+      type: String
+    }
   }
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="less">
-
-</style>

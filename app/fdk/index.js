@@ -1,18 +1,19 @@
 'use strict';
 
 const { setupFdk } = require("fdk-extension-javascript/express");
-const { MemoryStorage } = require("fdk-extension-javascript/express/storage");
+const { RedisStorage } = require("fdk-extension-javascript/express/storage");
 const config =  require("../config");
+const { appRedis } = require("./../common/redis.init");
 
 let fdkExtension = setupFdk({
     api_key: config.extension.api_key,
     api_secret: config.extension.api_secret,
     base_url: config.extension.base_url,
-    scopes: ["company/product"],
+    scopes: ["company/product"], // add your scopes
     callbacks: {
         auth: async (req) => {
             // Writee you code here to return initial launch url after suth process complete
-           return req.extension.base_url;
+            return `${req.extension.base_url}/company/${req.query['company_id']}`;
         },
         
         uninstall: async (req) => {
@@ -20,9 +21,9 @@ let fdkExtension = setupFdk({
             // If task is time taking then process it async on other process.
         }
     },
-    storage: new MemoryStorage("v1:"),
+    storage: new RedisStorage(appRedis,"exapmple-fynd-platform-extension"), // add your prefix
     access_mode: "offline",
-    // cluster: "https://api.fyndx0.de" // this is optional by default it points to prod.
+    cluster:  config.extension.fp_api_server// this is optional by default it points to prod.
 });
 
 

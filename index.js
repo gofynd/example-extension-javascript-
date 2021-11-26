@@ -1,6 +1,7 @@
 'use strict';
 
 require("dotenv").config();
+require('./app/common/redis.init');
 const app = require("./app/server");
 const port = 3000;
 

@@ -25,6 +25,20 @@ let config = convict({
       default: "",
       env: "EXTENSION_BASE_URL",
     },
+    fp_api_server: {
+      doc: "FP API Server",
+      default: "",
+      env: "EXTENSION_API_SERVER",
+    }
+  },
+  redis: {
+    host: {
+      doc: 'Redis URL of host.',
+      format: String,
+      default: 'redis://localhost:6379/0',
+      env: 'REDIS_EXTENSIONS_READ_WRITE',
+      arg: 'redis_extensions_read_write',
+    },
   },
 });
 
