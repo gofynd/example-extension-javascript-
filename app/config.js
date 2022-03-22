@@ -40,6 +40,13 @@ let config = convict({
       arg: 'redis_extensions_read_write',
     },
   },
+  port: {
+    doc: 'The port this extension will bind to',
+    format: 'port',
+    default: 3000,
+    env: 'PORT',
+    arg: 'port',
+  },
 });
 
 // Perform validation
