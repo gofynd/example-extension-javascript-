@@ -28,7 +28,7 @@ let config = convict({
     fp_api_server: {
       doc: "FP API Server",
       default: "",
-      env: "EXTENSION_API_SERVER",
+      env: "EXTENSION_CLUSTER_URL",
     }
   },
   redis: {
