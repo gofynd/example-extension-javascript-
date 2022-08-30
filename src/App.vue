@@ -1,11 +1,7 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link :to="`/company/${$route.params.company_id}`">Home</router-link> |
-      <router-link :to="`/company/${$route.params.company_id}/about`">About</router-link>
+    <div id="app">
+        <router-view />
     </div>
-    <router-view/>
-  </div>
 </template>
 
 <script>
