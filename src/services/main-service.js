@@ -1,11 +1,9 @@
-/* eslint-disable */
-"use strict";
-
 import URLS from './endpoint.service';
 import axios from 'axios';
 import { getCompany }  from '../helper/utils';
 
 axios.interceptors.request.use(config => {
+    console.log(getCompany(), "Get Company")
     config.headers['x-company-id'] = getCompany();
     return config;
 });

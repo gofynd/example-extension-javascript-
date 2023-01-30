@@ -4,19 +4,18 @@
 
     <loader v-if="pageLoading"></loader>
     <div v-else class="content">
-      <nitrozen-input
-        type="search"
-        placeholder="Search Sales Channels"
-        :showSearchIcon="true"
-        class="application-list"
+      <input
+        class="saleschannel-search-input" 
+        type="search" 
+        name="Search Sales Channels" 
+        placeholder="Search Sales Channels" 
         @input="searchApplication"
-      ></nitrozen-input>
-
+      >
       <div class="fp-extension-sales-channels-container">
         <div
           :key="application._id"
           class="fp-extension-app-box"
-          v-for="application of applications_list"
+          v-for="application of application_list"
         >
           <div class="logo">
             <img :src="application.logo" />
@@ -27,7 +26,7 @@
         </div>
 
         <div
-          v-if="applications_list.length % 3 == 2"
+          v-if="application_list.length % 3 == 2"
           class="fp-extension-app-box hidden"
         ></div>
       </div>
@@ -36,67 +35,60 @@
 </template>
 
 <script>
-/* File imports */
-import Loader from "../components/loader.vue";
-import { NitrozenInput } from "@gofynd/nitrozen-vue";
-
-/* Service imports */
-import MainService from "./../services/main-service";
-
+import loader from "@/components/loader.vue";
+import { ref, onMounted } from "vue";
+import MainService from "../services/main-service";
 export default {
-  name: "fp-extension-homepage",
   components: {
-    Loader,
-    "nitrozen-input": NitrozenInput,
+    loader,
   },
-  data() {
-    return {
-      applications_list: [],
-      all_applications: [],
-      pageLoading: false,
-    };
-  },
-  mounted() {
-    this.fetchApplications();
-  },
-  methods: {
-    fetchApplications() {
-      this.pageLoading = true;
-      MainService.getAllApplications()
-        .then(({ data }) => {
-          this.all_applications = data.items;
-          this.applications_list = data.items;
-          this.applications_list.map((ele) => {
-            (ele.text = ele.name),
-              (ele.value = ele._id),
-              (ele.image = ele.logo),
-              (ele.logo = ele.image && ele.image.secure_url);
-          });
-          this.pageLoading = false;
+  setup() {
+    let application_list = ref([]);
+    let all_applications = ref([]);
+    let pageLoading = ref(false);
+
+    const fetchApplications = async () => {
+      pageLoading.value = true;
+      try {
+        let { data } = await MainService.getAllApplications();
+        all_applications.value = data.items;
+        let temp = data.items.map((ele) => {
+          ele.text = ele.name
+          ele.value = ele._id
+          ele.image = ele.logo
+          ele.logo = ele.image && ele.image.secure_url
+          return ele
         })
-        .catch(() => {
-          this.pageLoading = false;
-          this.$snackbar.global.showError(
-            "Failed to fetch the list of all applications"
-          );
-        });
-    },
-    searchApplication(searchText) {
-      if (!searchText) {
-        this.applications_list = this.all_applications.map((app) => app);
-      } else {
-        this.applications_list = this.all_applications.filter((item) => {
-          return item.name.toLowerCase().includes(searchText.toLowerCase());
-        });
+        application_list.value = temp
+        pageLoading.value = false
+
+      } catch (e) {
+        pageLoading.value = false;
       }
-    },
+    };
+
+    const searchApplication = (event) => {
+      let searchText = event.target.value
+      if (!searchText) {
+        application_list.value = all_applications.value.map((app) => app)
+      } else {
+        application_list.value = all_applications.value.filter((item) => {
+          return item.name.toLowerCase().includes(searchText.toLowerCase());
+        })
+      }
+    }
+
+    onMounted(async () => {
+      await fetchApplications()
+    })
+    return { application_list, pageLoading, searchApplication }
   },
 };
 </script>
 
 <style lang="less" scoped>
 .fp-extension-landing-page {
-  font-family: "Inter";
+  font-family: "Inter", sans-serif;
   position: relative;
   width: 100%;
   box-sizing: border-box;
@@ -104,8 +96,9 @@ export default {
   margin: 24px auto;
 
   .fp-extension-saleschannel-title {
+    font-family: "Inter", sans-serif;
     font-weight: 700;
-    font-size: larger;
+    font-size: 24px;
     margin-bottom: 8px;
   }
 
@@ -130,6 +123,14 @@ export default {
         cursor: pointer;
       }
     }
+  }
+
+  .saleschannel-search-input {
+    width: 100%;
+    max-width: 1024px;
+    height: 36px;
+    border: 1px solid#ddd;
+    padding: 0 20px;
   }
 
   .fp-extension-app-box {
