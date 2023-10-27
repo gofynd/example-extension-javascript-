@@ -5,11 +5,6 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const path = require("path");
 
-// import your routes here
-const healthzRouter = require("./routes/healthz.router");
-const v1Router = require("./routes/v1.router");
-
-
 // initializing extension
 const { setupFdk } = require("fdk-extension-javascript/express");
 const { RedisStorage } = require("fdk-extension-javascript/express/storage");
@@ -30,9 +25,9 @@ let fdkExtension = setupFdk({
             // If task is time taking then process it async on other process.
         }
     },
-    storage: new RedisStorage(appRedis,"exapmple-fynd-platform-extension"), // add your prefix
-    access_mode: "offline",
-    cluster: process.env.EXTENSION_CLUSTER_URL || "https://api.fynd.com" // this is optional by default it points to prod.
+    storage: new RedisStorage(appRedis,"example-fynd-platform-extension"), // add your prefix
+    access_mode: "online",
+    cluster: process.env.EXTENSION_CLUSTER_URL || "https://api.fynd.com"
 });
 
 
@@ -49,12 +44,23 @@ app.use(bodyParser.json({
 app.use("/", fdkExtension.fdkHandler);
 
 
-app.use("/", healthzRouter);
-
 // platform routes
 const apiRoutes = fdkExtension.apiRoutes;
-apiRoutes.use('/v1', v1Router)
-app.use('/api', apiRoutes);
+apiRoutes.get('/applications', async function view(req, res, next) {
+    try {
+        const {
+            platformClient
+        } = req;
+        return res.json(await platformClient.configuration.getApplications({
+            pageSize: 1000,
+            q: JSON.stringify({"is_active": true})
+        }));
+    } catch (err) {
+        next(err);
+    }
+});
+
+app.use('/api/v1', apiRoutes);
 
 
 // application routes
