@@ -9,7 +9,6 @@ let fdkExtension = setupFdk({
     api_key: config.extension.api_key,
     api_secret: config.extension.api_secret,
     base_url: config.extension.base_url,
-    scopes: ["company/profile"], // add your scopes
     callbacks: {
         auth: async (req) => {
             // Writee you code here to return initial launch url after suth process complete
