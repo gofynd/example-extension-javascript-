@@ -19,10 +19,7 @@ const MainService = {
     },
     getAllApplicationProducts(params = {}) {
         return axios.get(URLS.GET_ALL_APPLICATION_PRODUCTS(params.application_id));
-    },
-    getApplicationData() {
-        return axios.get(URLS.GET_APPLICATION_DETAILS());
-    },
+    }
 }
 
 export default MainService;
