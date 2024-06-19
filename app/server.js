@@ -29,7 +29,7 @@ app.use("/", healthzRouter);
 app.use(express.static("dist"));
 app.use("/", fdkExtension.fdkHandler);
 const apiRoutes = fdkExtension.apiRoutes;
-apiRoutes.use('/v1', v1Router)
+apiRoutes.use('/v1.0', v1Router);
 app.use('/api', apiRoutes);
 
 app.get('*', (req, res) => {

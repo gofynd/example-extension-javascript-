@@ -27,6 +27,7 @@
     "express": "^4.18.1",
     "fdk-extension-javascript": "git+https://github.com/gofynd/fdk-extension-javascript.git#v0.6.0-beta.3",
     "ioredis": "^5.2.2",
+    "lodash.isempty": "^4.4.0",
     "vue": "^2.6.14",
     "vue-router": "^3.5.3",
     "vuex": "^3.6.2",

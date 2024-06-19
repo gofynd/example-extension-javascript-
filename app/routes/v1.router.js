@@ -10,16 +10,28 @@ router.get('/test-api', (req, res, next) => {
     });
 });
 
-// Get applications list
-router.get('/applications', async function view(req, res, next) {
+// Get products list
+router.get('/products', async function view(req, res, next) {
     try {
         const {
             platformClient
         } = req;
-        return res.json(await platformClient.configuration.getApplications({
-            pageSize: 1000,
-            q: JSON.stringify({"is_active": true})
-        }));
+        const data = await platformClient.catalog.getProducts()
+        return res.json(data);
+    } catch (err) {
+        next(err);
+    }
+});
+
+// Get products list for application
+router.get('/:application_id/products', async function view(req, res, next) {
+    try {
+        const {
+            platformClient
+        } = req;
+        const { application_id } = req.params;
+        const data = await platformClient.application(application_id).catalog.getAppProducts()
+        return res.json(data);
     } catch (err) {
         next(err);
     }

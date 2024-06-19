@@ -1,35 +1,74 @@
 <template>
-  <div class="fp-extension-landing-page">
-    <div class="fp-extension-saleschannel-title">Sales Channel</div>
+  <div class="products-container">
+    <div class="title">
+      This is an example extension home page user interface.
+    </div>
+    <div class="section">
+      <div class="heading">
+        Example Platform API:
+        <a :href="getDocumentPageLink" target="_blank">{{
+          isApplicationLaunch ? "getAppProducts" : "getProducts"
+        }}</a>
+      </div>
+      <div class="description">
+        This is an illustrative Platform API call to fetch the list of products
+        in this company. Go to your extension folder’s ‘root/app/routes/’
+        directory to check how to call Platform API and start calling API you
+        require.
+      </div>
+    </div>
 
     <loader v-if="pageLoading"></loader>
-    <div v-else class="content">
-      <nitrozen-input
-        type="search"
-        placeholder="Search Sales Channels"
-        :showSearchIcon="true"
-        class="application-list"
-        @input="searchApplication"
-      ></nitrozen-input>
-
-      <div class="fp-extension-sales-channels-container">
-        <div
-          :key="application._id"
-          class="fp-extension-app-box"
-          v-for="application of applications_list"
-        >
-          <div class="logo">
-            <img :src="application.logo" />
+    <div v-else>
+      <div
+        v-for="(product, index) in product_list"
+        :key="index"
+        class="product-list-container"
+      >
+        <div class="flex-row">
+          <img
+            class="mr-r-12"
+            v-if="product.is_active"
+            src="../assets/green-dot.svg"
+          />
+          <img class="mr-r-12" v-else src="../assets/grey-dot.svg" />
+          <div class="card-avatar mr-r-12">
+            <img
+              :src="productProfileImage(product.media)"
+              @error="getErrorImage()"
+              alt="text"
+            />
           </div>
-          <div class="line-1">{{ application.name }}</div>
-          <div class="line-2">{{ application.domain.name }}</div>
-          <div class="fp-extension-list-btn-cont"></div>
+          <div class="flex-column">
+            <div class="flex-row">
+              <div class="product-name" :id="`product-name-${index}`">
+                {{ product.name }}
+              </div>
+              <div class="product-item-code">|</div>
+              <span v-if="product.item_code" class="product-item-code"
+                >Item Code:
+                <span class="cl-RoyalBlue" :id="`product-item-code-${index}`">{{
+                  product.item_code
+                }}</span></span
+              >
+            </div>
+            <div
+              class="product-brand-name"
+              v-if="product.brand"
+              :id="`product-brand-name-${index}`"
+            >
+              {{ product.brand.name }}
+            </div>
+            <div
+              class="product-brand-name"
+              v-if="product.category_slug"
+              :id="`product-category-slug-${index}`"
+            >
+              Category :
+              {{ product.category_slug }}
+            </div>
+          </div>
         </div>
-
-        <div
-          v-if="applications_list.length % 3 == 2"
-          class="fp-extension-app-box hidden"
-        ></div>
       </div>
     </div>
   </div>
@@ -38,138 +77,208 @@
 <script>
 /* File imports */
 import Loader from "../components/loader.vue";
-import { NitrozenInput } from "@gofynd/nitrozen-vue";
 
 /* Service imports */
 import MainService from "./../services/main-service";
+const DOC_URL_PATH =
+  "/help/docs/sdk/latest/platform/company/catalog/#getProducts";
+const DOC_APP_URL_PATH =
+  "/help/docs/sdk/latest/platform/application/catalog#getAppProducts";
+import isEmpty from "lodash/isEmpty";
+import DEFAULT_NO_IMAGE from "../assets/default_icon_listing.png";
 
 export default {
   name: "fp-extension-homepage",
   components: {
     Loader,
-    "nitrozen-input": NitrozenInput,
   },
   data() {
     return {
-      applications_list: [],
-      all_applications: [],
+      product_list: [],
       pageLoading: false,
     };
   },
   mounted() {
-    this.fetchApplications();
+    if (this.isApplicationLaunch) this.fetchApplicationProducts();
+    else this.fetchProducts();
+  },
+  computed: {
+    getDocumentPageLink() {
+      return "https://api.uat.fyndx1.de"
+        .replace("api", "partners")
+        .concat(this.isApplicationLaunch ? DOC_APP_URL_PATH : DOC_URL_PATH);
+    },
+    isApplicationLaunch() {
+      return this.$route.params.application_id ? true : false;
+    },
   },
   methods: {
-    fetchApplications() {
+    productProfileImage(media) {
+      if (isEmpty(media)) {
+        return DEFAULT_NO_IMAGE;
+      }
+      const profileImg = media.find((m) => m.type === "image");
+      if (isEmpty(profileImg) || !profileImg.url) {
+        return DEFAULT_NO_IMAGE;
+      }
+      return profileImg.url;
+    },
+    fetchProducts() {
       this.pageLoading = true;
-      MainService.getAllApplications()
+      MainService.getAllProducts()
         .then(({ data }) => {
-          this.all_applications = data.items;
-          this.applications_list = data.items;
-          this.applications_list.map((ele) => {
-            (ele.text = ele.name),
-              (ele.value = ele._id),
-              (ele.image = ele.logo),
-              (ele.logo = ele.image && ele.image.secure_url);
-          });
+          this.product_list = data.items;
           this.pageLoading = false;
         })
         .catch(() => {
           this.pageLoading = false;
           this.$snackbar.global.showError(
-            "Failed to fetch the list of all applications"
+            "Failed to fetch the list of products"
           );
         });
     },
-    searchApplication(searchText) {
-      if (!searchText) {
-        this.applications_list = this.all_applications.map((app) => app);
-      } else {
-        this.applications_list = this.all_applications.filter((item) => {
-          return item.name.toLowerCase().includes(searchText.toLowerCase());
+    fetchApplicationProducts() {
+      this.pageLoading = true;
+      MainService.getAllApplicationProducts({
+        application_id: this.$route.params.application_id,
+      })
+        .then(({ data }) => {
+          this.product_list = data.items;
+          this.pageLoading = false;
+        })
+        .catch(() => {
+          this.pageLoading = false;
+          this.$snackbar.global.showError(
+            "Failed to fetch the list of products"
+          );
         });
-      }
+    },
+    getErrorImage() {
+      return "/src/assets/default_icon_listing.png";
     },
   },
 };
 </script>
 
 <style lang="less" scoped>
-.fp-extension-landing-page {
-  font-family: "Inter";
-  position: relative;
+html {
+  height: 100%;
   width: 100%;
-  box-sizing: border-box;
-  max-width: 1024px;
-  margin: 24px auto;
+  font-size: 8px;
+}
 
-  .fp-extension-saleschannel-title {
+body {
+  margin: 0;
+  font-family: Inter;
+  background-color: #f8f8f8 !important;
+  width: 100%;
+  height: 100%;
+}
+
+.products-container {
+  font-family: Inter;
+  position: relative;
+  box-sizing: border-box;
+  background: #fff;
+  border: 1px solid #f3f3f3;
+  border-radius: 12px;
+  padding: 24px;
+  margin: 24px;
+
+  .title {
     font-weight: 700;
-    font-size: larger;
-    margin-bottom: 8px;
+    font-size: 25px;
+    text-align: center;
   }
 
-  .fp-extension-sales-channels-container {
-    display: flex;
-    flex-wrap: wrap;
-    margin: 24px 0;
-    justify-content: space-between;
-
-    .fp-extension-list-btn-cont {
+  .section {
+    margin: 40px 0px 20px 0px;
+    .heading {
+      font-size: 20px;
+      line-height: 21px;
       display: flex;
-      justify-content: flex-end;
-
-      .fp-extension-list-btn {
-        display: flex;
-        width: 40px;
-        height: 40px;
-        border: 1px solid #e4e5e6;
-        border-radius: 4px;
-        justify-content: center;
-        align-items: center;
-        cursor: pointer;
+      flex-direction: row;
+      gap: 6px;
+      font-weight: 600;
+      a {
+        text-decoration: none;
+        color: #2e31be;
+      }
+      a:hover {
+        text-decoration: underline;
       }
     }
+    .description {
+      font-size: 14px;
+      color: #666;
+      line-height: 21px;
+      padding-top: 8px;
+    }
   }
 
-  .fp-extension-app-box {
-    width: 261px;
-    height: auto;
-    background-color: white;
+  .product-list-container {
+    display: flex;
     border: 1px solid #e4e5e6;
-    padding: 24px;
+    -webkit-font-smoothing: antialiased;
+    min-height: 102px;
+    padding: 16px;
     border-radius: 4px;
-    margin-bottom: 24px;
-
-    & + .fp-extension-app-box:nth-child(3n + 1) {
-      margin-left: 0;
-    }
-
-    .logo {
-      width: 48px;
-      height: 48px;
-
+    margin-bottom: 16px;
+    box-sizing: border-box;
+    margin: 24px 0;
+    .card-avatar {
+      min-height: 60px;
+      min-width: 60px;
+      max-height: 60px;
+      max-width: 60px;
+      display: flex;
+      align-items: center;
       img {
         width: 100%;
-        height: auto;
+        height: 60px;
+        object-fit: cover;
+        border-radius: 50%;
       }
     }
-
-    .line-1 {
+    .product-name {
       font-weight: 600;
-      font-size: 16px;
-      line-height: 26px;
+      font-size: 14px;
+      color: #41434c;
+      line-height: 21px;
     }
-
-    .line-2 {
-      color: #9b9b9b;
-      line-height: 22px;
+    .product-item-code {
+      font-weight: 400;
       font-size: 12px;
+      color: #9b9b9b;
+    }
+    .product-brand-name {
+      font-weight: 400;
+      font-size: 12px;
+      color: #666;
+      line-height: 21px;
+      display: flex;
+      flex-direction: row;
+      gap: 2px;
     }
   }
 }
 
-.hidden {
-  visibility: hidden;
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.mr-r-12 {
+  margin-right: 12px;
+}
+.cl-RoyalBlue {
+  color: #2e31be;
+  margin-left: 2px;
 }
 </style>

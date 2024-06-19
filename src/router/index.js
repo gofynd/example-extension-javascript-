@@ -10,6 +10,12 @@ const routes = [
     name: 'Home',
     beforeEnter: routeGuard,
     component: Home
+  },
+  {
+    path: '/company/:company_id/application/:application_id',
+    name: 'Home',
+    beforeEnter: routeGuard,
+    component: Home
   }
 ]
 
