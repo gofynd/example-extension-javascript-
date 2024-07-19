@@ -31,8 +31,8 @@ jobs:
     - name: Install packages and run test cases
       run: |
         npm install
-        npm test:vue
-        npm test:node
+        npm run test:vue
+        npm run test:node
 
     - name: Coveralls (Uploading test report)
       if: ${{ steps.get_branch.outputs.branch == 'master' }}
