@@ -3,7 +3,6 @@ import root from "window-or-global";
 let envVars = root.env || {};
 
 envVars.EXAMPLE_MAIN_URL = `${root.location.protocol}//${root.location.hostname}`;
-// envVars.EXAMPLE_MAIN_URL = `${root.location.protocol}//${root.location.hostname}:${root.location.port}`;
 if (
   root &&
   root.process &&
@@ -13,7 +12,7 @@ if (
   envVars.EXAMPLE_MAIN_URL = 'https://api.xyz.com';
 }
 
-const Endpoints = {
+const URLS = {
   GET_TEST_API() {
     return urlJoin(envVars.EXAMPLE_MAIN_URL, '/api/v1.0/test-api')
   },
@@ -25,4 +24,4 @@ const Endpoints = {
   }
 };
 
-export default Endpoints;
+export default URLS;

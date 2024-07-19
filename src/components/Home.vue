@@ -79,7 +79,7 @@
 import Loader from "../components/loader.vue";
 
 /* Service imports */
-import MainService from "./../services/main-service";
+import ProductService from "../services/product.service.js";
 const DOC_URL_PATH =
   "/help/docs/sdk/latest/platform/company/catalog/#getProducts";
 const DOC_APP_URL_PATH =
@@ -109,7 +109,7 @@ export default {
         .concat(this.isApplicationLaunch ? DOC_APP_URL_PATH : DOC_URL_PATH);
     },
     isApplicationLaunch() {
-      return this.$route.params.application_id ? true : false;
+      return this.$route?.params.application_id ? true : false;
     },
   },
   methods: {
@@ -125,7 +125,7 @@ export default {
     },
     fetchProducts() {
       this.pageLoading = true;
-      MainService.getAllProducts()
+      ProductService.getAllProducts()
         .then(({ data }) => {
           this.product_list = data.items;
           this.pageLoading = false;
@@ -139,7 +139,7 @@ export default {
     },
     fetchApplicationProducts() {
       this.pageLoading = true;
-      MainService.getAllApplicationProducts({
+      ProductService.getAllApplicationProducts({
         application_id: this.$route.params.application_id,
       })
         .then(({ data }) => {

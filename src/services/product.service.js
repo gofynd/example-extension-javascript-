@@ -1,7 +1,7 @@
 /* eslint-disable */
 "use strict";
 
-import URLS from './endpoint.service';
+import URLS from './domain.service';
 import axios from 'axios';
 import { getCompany } from '../helper/utils';
 
@@ -10,7 +10,7 @@ axios.interceptors.request.use(config => {
     return config;
 });
 
-const MainService = {
+const ProductService = {
     getTestApi(params = {}) {
         return axios.get(URLS.GET_TEST_API());
     },
@@ -22,4 +22,4 @@ const MainService = {
     }
 }
 
-export default MainService;
+export default ProductService;
