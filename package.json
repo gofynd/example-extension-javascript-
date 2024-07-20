@@ -7,8 +7,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "test:node": "jest --config app/jest.config.js app --no-cache --detectOpenHandles --json --outputFile=./coverage/coverage.json",
-    "test:vue": "jest --updateSnapshot --projects src --no-cache --detectOpenHandles"
+    "test:node": "jest --config app/jest.config.js app --no-cache --json --outputFile=./coverage/coverage.json",
+    "test:vue": "jest --updateSnapshot --projects src --no-cache"
   },
   "dependencies": {
     "@gofynd/fdk-client-javascript": "^1.3.5",
