@@ -30,7 +30,7 @@ jobs:
 
     - name: Install packages and run test cases
       run: |
-        npm install
+        npm install --yes
         npm run test:vue
         npm run test:node
 
