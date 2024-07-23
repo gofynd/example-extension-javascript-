@@ -96,6 +96,7 @@ export default {
     return {
       product_list: [],
       pageLoading: false,
+      moonlight_URL: window.env?.fp_api_server || 'https://api.fynd.com'
     };
   },
   mounted() {
@@ -104,7 +105,7 @@ export default {
   },
   computed: {
     getDocumentPageLink() {
-      return "https://api.uat.fyndx1.de"
+      return this.moonlight_URL
         .replace("api", "partners")
         .concat(this.isApplicationLaunch ? DOC_APP_URL_PATH : DOC_URL_PATH);
     },

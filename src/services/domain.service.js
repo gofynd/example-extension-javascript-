@@ -13,9 +13,6 @@ if (
 }
 
 const URLS = {
-  GET_TEST_API() {
-    return urlJoin(envVars.EXAMPLE_MAIN_URL, '/api/v1.0/test-api')
-  },
   GET_ALL_PRODUCTS() {
     return urlJoin(envVars.EXAMPLE_MAIN_URL, '/api/v1.0/products')
   },

@@ -1,7 +1,7 @@
 `use strict`
 
 import { shallowMount, createLocalVue } from '@vue/test-utils'
-import Home from '../../../components/Home.vue'
+import Home from '../../../pages/Home.vue'
 import VueRouter from 'vue-router'
 import flushPromises from 'flush-promises'
 import axios from 'axios'

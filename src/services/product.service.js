@@ -11,9 +11,6 @@ axios.interceptors.request.use(config => {
 });
 
 const ProductService = {
-    getTestApi(params = {}) {
-        return axios.get(URLS.GET_TEST_API());
-    },
     getAllProducts(params = {}) {
         return axios.get(URLS.GET_ALL_PRODUCTS());
     },
