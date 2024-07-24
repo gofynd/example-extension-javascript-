@@ -78,7 +78,7 @@ describe('Test Home component', () => {
     });
     
     it('It should render product list for company', async() =>{
-        expect(wrapper.vm.product_list.length).toBe(2)
+        expect(wrapper.vm.productList.length).toBe(2)
     });
     
     
@@ -95,7 +95,7 @@ describe('Test Home component', () => {
         expect(wrapper.element).toMatchSnapshot();
         expect(wrapper.exists()).toBeTruthy();
         await flushPromises()
-        expect(wrapper.vm.product_list.length).toBe(2)
+        expect(wrapper.vm.productList.length).toBe(2)
     });
     
 })

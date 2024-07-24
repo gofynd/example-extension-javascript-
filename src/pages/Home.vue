@@ -5,23 +5,23 @@
     </div>
     <div class="section">
       <div class="heading">
-        Example Platform API:
+        Example {{isApplicationLaunch ? "Application API" : "Platform API" }}:
         <a :href="getDocumentPageLink" target="_blank">{{
           isApplicationLaunch ? "getAppProducts" : "getProducts"
         }}</a>
       </div>
       <div class="description">
         This is an illustrative Platform API call to fetch the list of products
-        in this company. Go to your extension folder’s ‘root/app/routes/’
+        in this company. Go to your extension folder’s /app/routes/’
         directory to check how to call Platform API and start calling API you
         require.
       </div>
-    </div>
+    </div> 
 
     <loader v-if="pageLoading"></loader>
     <div v-else>
       <div
-        v-for="(product, index) in product_list"
+        v-for="(product, index) in productList"
         :key="index"
         class="product-list-container"
       >
@@ -94,9 +94,9 @@ export default {
   },
   data() {
     return {
-      product_list: [],
+      productList: [],
       pageLoading: false,
-      moonlight_URL: window.env?.fp_api_server || 'https://api.fynd.com'
+      documentationUrl: 'https://api.fynd.com'
     };
   },
   mounted() {
@@ -105,7 +105,7 @@ export default {
   },
   computed: {
     getDocumentPageLink() {
-      return this.moonlight_URL
+      return this.documentationUrl
         .replace("api", "partners")
         .concat(this.isApplicationLaunch ? DOC_APP_URL_PATH : DOC_URL_PATH);
     },
@@ -128,7 +128,7 @@ export default {
       this.pageLoading = true;
       ProductService.getAllProducts()
         .then(({ data }) => {
-          this.product_list = data.items;
+          this.productList = data.items;
           this.pageLoading = false;
         })
         .catch(() => {
@@ -144,7 +144,7 @@ export default {
         application_id: this.$route.params.application_id,
       })
         .then(({ data }) => {
-          this.product_list = data.items;
+          this.productList = data.items;
           this.pageLoading = false;
         })
         .catch(() => {
