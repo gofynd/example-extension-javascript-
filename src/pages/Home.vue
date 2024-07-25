@@ -84,7 +84,6 @@ const DOC_URL_PATH =
   "/help/docs/sdk/latest/platform/company/catalog/#getProducts";
 const DOC_APP_URL_PATH =
   "/help/docs/sdk/latest/platform/application/catalog#getAppProducts";
-import isEmpty from "lodash/isEmpty";
 import DEFAULT_NO_IMAGE from "../assets/default_icon_listing.png";
 
 export default {
@@ -115,11 +114,11 @@ export default {
   },
   methods: {
     productProfileImage(media) {
-      if (isEmpty(media)) {
+      if (media.length === 0) {
         return DEFAULT_NO_IMAGE;
       }
       const profileImg = media.find((m) => m.type === "image");
-      if (isEmpty(profileImg) || !profileImg.url) {
+      if (!profileImg?.url) {
         return DEFAULT_NO_IMAGE;
       }
       return profileImg.url;

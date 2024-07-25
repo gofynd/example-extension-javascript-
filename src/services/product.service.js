@@ -1,22 +1,21 @@
-/* eslint-disable */
-"use strict";
+import axios from "axios";
+import { getCompany } from "../helper/utils";
+import urlJoin from "url-join";
 
-import URLS from './domain.service';
-import axios from 'axios';
-import { getCompany } from '../helper/utils';
-
-axios.interceptors.request.use(config => {
-    config.headers['x-company-id'] = getCompany();
-    return config;
+axios.interceptors.request.use((config) => {
+  config.headers["x-company-id"] = getCompany();
+  return config;
 });
 
+const EXAMPLE_MAIN_URL = window.location.origin;
+
 const ProductService = {
-    getAllProducts(params = {}) {
-        return axios.get(URLS.GET_ALL_PRODUCTS());
-    },
-    getAllApplicationProducts(params = {}) {
-        return axios.get(URLS.GET_ALL_APPLICATION_PRODUCTS(params.application_id));
-    }
-}
+  getAllProducts() {
+    return axios.get(urlJoin(EXAMPLE_MAIN_URL, '/api/products'));
+  },
+  getAllApplicationProducts(params = {}) {
+    return axios.get(urlJoin(EXAMPLE_MAIN_URL, `/api/products/application/${params.application_id}`));
+  }
+};
 
 export default ProductService;

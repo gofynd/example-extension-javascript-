@@ -12,7 +12,7 @@ jest.mock("fdk-extension-javascript/express", jest.fn(() => {
                 fdkHandler: (req, res, next) => {
                     next();
                 },
-                apiRoutes: express.Router()
+                platformApiRoutes: express.Router()
             }
         }
     }

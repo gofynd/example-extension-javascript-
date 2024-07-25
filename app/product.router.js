@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 // Get products list
-router.get('/products', async function view(req, res, next) {
+router.get('/', async function view(req, res, next) {
     try {
         const {
             platformClient
@@ -15,7 +15,7 @@ router.get('/products', async function view(req, res, next) {
 });
 
 // Get products list for application
-router.get('/:application_id/products', async function view(req, res, next) {
+router.get('/application/:application_id', async function view(req, res, next) {
     try {
         const {
             platformClient

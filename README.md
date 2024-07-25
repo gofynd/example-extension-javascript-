@@ -1,4 +1,7 @@
 # Build a Fynd Extension using node.js + vue.js
+
+[![Coverage Status][coveralls-badge]]([coveralls-url])
+
 This project outlines the development process for a Fynd extension that displays product listings for a company and its associated applications. By following this guide, you'll be able to set up the development environment, build the extension locally, and understand the testing procedures.
 
 ## Quick start
@@ -111,3 +114,7 @@ npm run test:vue
 ### Tech Stack
 1. [fdk-client-javascript](https://github.com/gofynd/fdk-client-javascript): This library contains all the methods to call Fynd platform APIs.
 2. [fdk-extension-javascript](https://github.com/gofynd/fdk-extension-javascript): This library streamlines the setup of authentication for accessing Fynd Platform APIs. It also simplifies the process of subscribing to webhooks for receiving real-time notifications.
+
+
+[coveralls-badge]: https://coveralls.io/repos/github/gofynd/example-extension-javascript/badge.svg?branch=fpco-38359-test-case-setup&&kill_cache=1
+[coveralls-url]: https://coveralls.io/github/gofynd/example-extension-javascript?branch=fpco-38359-test-case-setup

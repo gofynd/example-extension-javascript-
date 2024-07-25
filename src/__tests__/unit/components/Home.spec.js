@@ -6,7 +6,8 @@ import VueRouter from 'vue-router'
 import flushPromises from 'flush-promises'
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
-import URLS from '../../../services/domain.service'
+import urlJoin from "url-join";
+const EXAMPLE_MAIN_URL = window.location.origin;
 
 const mock = new MockAdapter(axios)
 
@@ -51,12 +52,12 @@ describe('Test Home component', () => {
         router.push({
             path: `/company/1/`,
         })
-        
-        mock.onGet(URLS.GET_ALL_PRODUCTS()).reply(
+
+        mock.onGet(urlJoin(EXAMPLE_MAIN_URL, '/api/products')).reply(
             200,
             mockData
         )
-        mock.onGet(URLS.GET_ALL_APPLICATION_PRODUCTS('000000000000000000000001')).reply(
+        mock.onGet(urlJoin(EXAMPLE_MAIN_URL, `/api/products/application/000000000000000000000001`)).reply(
             200,
             mockData
         )
