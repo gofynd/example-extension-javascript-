@@ -1,4 +1,4 @@
-# Build a Fynd Extension using node.js + vue.js
+# Build a Fynd Extension using node.js + vue.js(vue3)
 
 [![Coverage Status][coveralls-badge]]([coveralls-url])
 

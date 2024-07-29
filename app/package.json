@@ -14,11 +14,11 @@
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "fdk-extension-javascript": "git+https://github.com/gofynd/fdk-extension-javascript.git#add-sqlite-support-for-storage",
-    "jest": "^29.7.0",
     "sqlite3": "^5.1.7"
   },
   "devDependencies": {
     "axios-mock-adapter": "^1.21.2",
+    "jest": "^29.7.0",
     "nodemon": "^3.1.4",
     "supertest": "^6.3.0"
   },
