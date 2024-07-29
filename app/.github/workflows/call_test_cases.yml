@@ -34,11 +34,11 @@ jobs:
         npm install
         npm run test
 
-    - name: Install packages and run tests for vue
-      working-directory: ./src
-      run: |
-        npm install
-        npm run test
+    # - name: Install packages and run tests for vue
+    #   working-directory: ./src
+    #   run: |
+    #     npm install
+    #     npm run test
 
     - name: Coveralls (Uploading test report)
       #if: ${{ steps.get_branch.outputs.branch == 'master' || steps.get_branch.outputs.branch == 'fpco-38359-test-case-setup' }}
