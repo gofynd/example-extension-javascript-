@@ -1,10 +1,9 @@
 'use strict';
 
 require("dotenv").config();
-require('./app/common/redis.init');
-const config = require("./app/config")
-const app = require("./app/server");
-const port = config.port;
+require('./sqlite.init');
+const app = require("./server");
+const port = process.env.PORT || 8080;
 
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)

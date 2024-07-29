@@ -1,27 +1,23 @@
 <template>
   <div class="loader">
     <img src="./../assets/gifs/loader.gif" />
-    <div v-if="props.helperText">
-      {{ props.helperText }}
+    <div v-if="helperText">
+      {{ helperText }}
     </div>
   </div>
 </template>
 
-<script>
-import { defineProps } from 'vue';
-
-export default {
-  name: "fp-extension-loader",
-  setup() {
-    const props = defineProps({
-      helperText: {
-        type: String,
-        default: ''
-      }
-    })
-    return { props }
+<script setup>
+// Define props using defineProps
+const props = defineProps({
+  helperText: {
+    type: String,
+    default: ''
   }
-};
+})
+
+// Destructure props for easier use in the template
+const { helperText } = props;
 </script>
 
 <style lang="less" scoped>

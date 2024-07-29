@@ -28,3 +28,6 @@ __snapshots__/
 
 # ignore coverage
 coverage/
+
+# ignore coverage_output.json
+app/coverage_output.json

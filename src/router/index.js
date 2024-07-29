@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router"
 import { routeGuard } from "./guard"
-import Home from "../views/Home"
+import Home from "../pages/Home"
+import NotFound from '../pages/NotFound.vue'
 
 const routes = [
   {
@@ -8,6 +9,17 @@ const routes = [
     name: 'Home',
     beforeEnter: routeGuard,
     component: Home
+  },
+  {
+    path: '/company/:company_id/application/:application_id',
+    name: 'AppHome',
+    beforeEnter: routeGuard,
+    component: Home
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'NotFound',
+    component: NotFound
   }
 ]
 
