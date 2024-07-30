@@ -3,8 +3,12 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon index.js",
+    "start:dev": "nodemon index.js",
+    "start:prod": "NODE_ENV=production node index.js",
     "test": "jest --config jest.config.js --no-cache --detectOpenHandles --json --outputFile=./coverage/coverage.json && node coverage_output.js"
+  },
+  "nodemonConfig": {
+    "ignore": ["web/**"]
   },
   "dependencies": {
     "@gofynd/fdk-client-javascript": "^1.4.7",

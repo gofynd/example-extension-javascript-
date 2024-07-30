@@ -33,7 +33,7 @@ const fdkExtension = setupFdk({
 
 const STATIC_PATH = process.env.NODE_ENV === 'production'
     ? path.join(process.cwd(), 'web', 'dist')
-    : path.join(process.cwd(), 'web'); // ASk @vivek
+    : path.join(process.cwd(), 'web');
     
 const app = express();
 const healthzRouter = express.Router();

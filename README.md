@@ -15,10 +15,14 @@ This project outlines the development process for a Fynd extension that displays
     - EXTENSION_API_KEY:`extension api key`
     - EXTENSION_API_SECRET: `extension api secret`
     - EXTENSION_BASE_URL: `ngrok url`
-    - PORT: `port of an application. defaults to 8080`
+    - BACKEND_PORT: `port of backend application. defaults to 8080`
+    - FRONTEND_PORT: `port of frontend application. defaults to 8081`
 
 
 ### Project setup
+
+### Install dependencies
+Install backend dependency
 Using yarn:
 ```
 yarn install
@@ -28,16 +32,38 @@ Using npm:
 npm install
 ```
 
-### Start local server
+Install frontend dependency
+Using yarn:
+```
+yarn install --cwd ./web
+```
+Using npm:
+```
+npm install --prefix ./web
+```
+
+
+### Local development
 Starts the local server in watch mode, meaning it will automatically restart when changes are detected.
 
 Using yarn:
 ```
-yarn run start
+yarn run start:dev
 ```
 Using npm:
 ```
-npm run start
+npm run start:dev
+```
+
+### Start production server
+
+Using yarn:
+```
+yarn run start:prod
+```
+Using npm:
+```
+npm run start:prod
 ```
 
 ### Serve frontend
@@ -45,23 +71,27 @@ Serves the frontend of the application in watch mode, automatically refreshing w
 
 Using yarn:
 ```
-yarn run serve
+cd web && yarn run serve
 ```
 Using npm:
 ```
-npm run serve
+cd web && npm run serve
 ```
 
-### Start local server and serve frontend
-Starts both the local server and serves the frontend in watch mode.
+### Backend API Proxying
 
-Using yarn:
+When developing your application, the Vite development server is configured to handle API requests through a proxy. This setup forwards API calls to a backend server, specified by the     `BACKEND_PORT` environment variable, ensuring a smooth integration between your frontend and backend during development.
+
+### Proxy Configuration
+
+The Vite development server uses the following proxy configuration to direct API requests:
 ```
-yarn run dev-start
-```
-Using npm:
-```
-npm run dev-start
+const proxyOptions = {
+  target: `http://127.0.0.1:${process.env.BACKEND_PORT}`,
+  changeOrigin: false,
+  secure: true,
+  ws: false
+}
 ```
 
 ### Build
@@ -69,11 +99,11 @@ Compiles the application for production.
 
 Using yarn:
 ```
-yarn run build
+cd web && yarn run build
 ```
 Using npm:
 ```
-npm run build
+cd web && npm run build
 ```
 
 ### Lints and fixes files
@@ -81,11 +111,11 @@ Checks for linting errors and automatically fixes them if possible.
 
 Using yarn:
 ```
-yarn run lint
+cd web && yarn run lint
 ```
 Using npm
 ```
-npm run lint
+cd web && npm run lint
 ```
 
 ### Testing
@@ -93,22 +123,22 @@ npm run lint
 
 Using yarn
 ```
-yarn run test:node
+yarn run test
 ```
 Using npm
 ```
-npm run test:node
+npm run test
 ```
 
 **Test Frontend**
 
 Using yarn
 ```
-yarn run test:vue
+cd web && yarn run test
 ```
 Using npm
 ```
-npm run test:vue
+cd web && npm run test
 ```
 
 ### Tech Stack
