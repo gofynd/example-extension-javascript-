@@ -34,7 +34,7 @@ jobs:
         npm run test
 
     - name: Coveralls (Uploading test report)
-      #if: ${{ steps.get_branch.outputs.branch == 'master' || steps.get_branch.outputs.branch == 'fpco-38359-test-case-setup' }}
+      if: ${{ steps.get_branch.outputs.branch == 'master' }}
       uses: coverallsapp/github-action@master
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
