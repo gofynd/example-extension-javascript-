@@ -34,8 +34,8 @@ jobs:
         npm run test
 
     - name: Coveralls (Uploading test report)
-      if: ${{ steps.get_branch.outputs.branch == 'master' }}
-      uses: coverallsapp/github-action@master
+      if: ${{ steps.get_branch.outputs.branch == 'main' }}
+      uses: coverallsapp/github-action@main
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         path-to-lcov: ./app/coverage/lcov.info

@@ -89,5 +89,5 @@ const proxyOptions = {
 2. [fdk-extension-javascript](https://github.com/gofynd/fdk-extension-javascript): This library streamlines the setup of authentication for accessing Fynd Platform APIs. It also simplifies the process of subscribing to webhooks for receiving real-time notifications.
 
 
-[coveralls-badge]: https://coveralls.io/repos/github/gofynd/example-extension-javascript/badge.svg?branch=fpco-38359-test-case-setup&&kill_cache=1
-[coveralls-url]: https://coveralls.io/github/gofynd/example-extension-javascript?branch=fpco-38359-test-case-setup
+[coveralls-badge]: https://coveralls.io/repos/github/gofynd/example-extension-javascript/badge.svg?branch=main&&kill_cache=1
+[coveralls-url]: https://coveralls.io/github/gofynd/example-extension-javascript?branch=main
