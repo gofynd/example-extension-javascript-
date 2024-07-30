@@ -46,42 +46,31 @@ npm install --prefix ./web
 
 
 ### Local development
-To start development locally you need to start tunnel on `FRONTEND_PORT` defined in .env file to start tunnel you can use `fdk extension preview-url --port  <FRONTEND_PORT>`, this command will provide you partners panel URL in your terminal to preview extension. 
+To start development locally you need to start tunnel on `FRONTEND_PORT` defined in .env file to start tunnel you can use `fdk extension preview-url --port  <FRONTEND_PORT>`, it will provide partners panel URL  
 
-> Before visiting partners panel URL provided in terminal you need to hit below command in new terminal.
+> Before visiting partners panel URL provided by preview-url command you need to hit below command in new terminal
 
 This command will start backend and frontend server in watch mode and changes you make locally will be directly visible in partners panel
 ```
 node start-dev.js
 ```
 
-
-### Start production server
-
-Using yarn:
-```
-yarn run start:prod
-```
-Using npm:
-```
-npm run start:prod
-```
-
-### Serve frontend
-Serves the frontend of the application in watch mode, automatically refreshing when changes are made.
+### Build for production deployment
+Build frontend.
 
 Using yarn:
 ```
-cd web && yarn run serve
+cd web && yarn run build
 ```
 Using npm:
 ```
-cd web && npm run serve
+cd web && npm run build
 ```
+
 
 ### Backend API Proxying
 
-When developing your application, the Vite development server is configured to handle API requests through a proxy. This setup forwards API calls to a backend server, specified by the     `BACKEND_PORT` environment variable, ensuring a smooth integration between your frontend and backend during development.
+When developing your application, the Vite development server is configured to handle API requests through a proxy. This setup forwards API calls to a backend server, specified by the  `BACKEND_PORT` environment variable, ensuring a smooth integration between your frontend and backend during development.
 
 ### Proxy Configuration
 
@@ -93,53 +82,6 @@ const proxyOptions = {
   secure: true,
   ws: false
 }
-```
-
-### Build
-Compiles the application for production.
-
-Using yarn:
-```
-cd web && yarn run build
-```
-Using npm:
-```
-cd web && npm run build
-```
-
-### Lints and fixes files
-Checks for linting errors and automatically fixes them if possible.
-
-Using yarn:
-```
-cd web && yarn run lint
-```
-Using npm
-```
-cd web && npm run lint
-```
-
-### Testing
-**Test backend**
-
-Using yarn
-```
-yarn run test
-```
-Using npm
-```
-npm run test
-```
-
-**Test Frontend**
-
-Using yarn
-```
-cd web && yarn run test
-```
-Using npm
-```
-cd web && npm run test
 ```
 
 ### Tech Stack
