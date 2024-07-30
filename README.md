@@ -1,3 +1,4 @@
+
 # Build a Fynd Extension using node.js + vue.js(vue3)
 
 [![Coverage Status][coveralls-badge]]([coveralls-url])
@@ -6,23 +7,23 @@ This project outlines the development process for a Fynd extension that displays
 
 ## Quick start
 ### Prerequisites
+* You have installed [Node 16.X.X](https://docs.npmjs.com/) or above version.
+* You have fdk-cli installed [install](https://github.com/gofynd/fdk-cli)
 * You have created a [partner account](https://partners.fynd.com).
 * You have created a [development account](https://partners.fynd.com/help/docs/partners/testing-extension/development-acc#create-development-account) and [populated test data](https://partners.fynd.com/help/docs/partners/testing-extension/development-acc#populate-test-data) in it.
-* You’ve installed [Node 16.X.X](https://docs.npmjs.com/) or above version.
 * You have created an [extension](https://partners.fynd.com) in partner panel. if not, you can follow [extension guide](https://partners.fynd.com/help/docs/partners/getting-started/create-extension) to create an extension.
-* You have setup ngrok account to creates a tunnel and updated `EXTENSION_BASE_URL` env variable value to the ngrok URL.
-* Update below environment variable value in `.env` file
-    - EXTENSION_API_KEY:`extension api key`
-    - EXTENSION_API_SECRET: `extension api secret`
-    - EXTENSION_BASE_URL: `ngrok url`
-    - BACKEND_PORT: `port of backend application. defaults to 8080`
-    - FRONTEND_PORT: `port of frontend application. defaults to 8081`
+* Update below environment variable value in `.env` file, This detail you can get from partners panel
+    - EXTENSION_API_KEY:`Extension api key`
+    - EXTENSION_API_SECRET: `Extension api secret`
+
 
 
 ### Project setup
 
 ### Install dependencies
-Install backend dependency
+
+**Install backend dependency**
+
 Using yarn:
 ```
 yarn install
@@ -32,7 +33,8 @@ Using npm:
 npm install
 ```
 
-Install frontend dependency
+**Install frontend dependency**
+
 Using yarn:
 ```
 yarn install --cwd ./web
@@ -44,16 +46,15 @@ npm install --prefix ./web
 
 
 ### Local development
-Starts the local server in watch mode, meaning it will automatically restart when changes are detected.
+To start development locally you need to start tunnel on `FRONTEND_PORT` defined in .env file to start tunnel you can use `fdk extension preview-url --port  <FRONTEND_PORT>`, this command will provide you partners panel URL in your terminal to preview extension. 
 
-Using yarn:
+> Before visiting partners panel URL provided in terminal you need to hit below command in new terminal.
+
+This command will start backend and frontend server in watch mode and changes you make locally will be directly visible in partners panel
 ```
-yarn run start:dev
+node start-dev.js
 ```
-Using npm:
-```
-npm run start:dev
-```
+
 
 ### Start production server
 
