@@ -3,6 +3,7 @@ module.exports = {
     testEnvironment: 'node',
     coverageReporters: ['json-summary', 'lcov'],
     globalTeardown: './__tests__/unit/global/test-teardown-globals.js',
+    testPathIgnorePatterns: ['/web/'],
     setupFiles: ['./jest.init.js'],
     testMatch: [
         '**/__tests__/**/*.spec.[jt]s?(x)',

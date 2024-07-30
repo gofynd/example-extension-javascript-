@@ -1,7 +1,7 @@
 import Home from '../../../pages/Home.vue';
 import NotFound from '../../../pages/NotFound.vue';
 import { routeGuard } from '../../../router/guard';
-import router from '../../../router'; // Ensure this is your actual router configuration
+import router from '../../../router';
 
 describe('Router Configuration', () => {
   it('Should have the correct routes', () => {

@@ -3,19 +3,12 @@ import { defineConfig } from 'vite'
 import { dirname } from 'path'
 import { fileURLToPath } from 'url'
 import vue from '@vitejs/plugin-vue'
-
-if (
-  process.env.npm_lifecycle_event === 'build' &&
-  !process.env.CI &&
-  !process.env.SHOPIFY_API_KEY
-) {
-  console.warn(
-    '\nBuilding the frontend app without an API key. The frontend build will not run without an API key. Set the SHOPIFY_API_KEY environment variable when running the build command.\n'
-  )
-}
+import { config as loadEnv } from 'dotenv';
+import path from 'path';
+loadEnv({ path: path.resolve(__dirname,'../', '.env') }); // TODO: correct way?
 
 const proxyOptions = {
-  target: `http://127.0.0.1:3000`,
+  target: `http://127.0.0.1:${process.env.BACKEND_PORT}`,
   changeOrigin: false,
   secure: true,
   ws: false
