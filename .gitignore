@@ -21,10 +21,16 @@ pnpm-debug.log*
 *.sln
 *.sw?
 
-/dist
+frontend/dist
+
 
 # ignore snapshots
 __snapshots__/
 
 # ignore coverage
 coverage/
+
+# ignore coverage_output.json
+coverage_output.json
+#SQLite DB
+session_storage.db
