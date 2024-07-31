@@ -69,7 +69,7 @@ cd frontend && npm run build
 ```
 
 
-## Proxy API for HMR
+## API Proxy for HMR
 
 When developing your application, the Vite development server is configured to handle API requests through a proxy. This setup forwards API calls to a backend server, specified by the  `BACKEND_PORT` environment variable, ensuring a smooth integration between your frontend and backend during development.
 
