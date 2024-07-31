@@ -12,7 +12,7 @@ This project outlines the development process for a Fynd extension that displays
 * You have created a [partner account](https://partners.fynd.com).
 * You have created a [development account](https://partners.fynd.com/help/docs/partners/testing-extension/development-acc#create-development-account) and [populated test data](https://partners.fynd.com/help/docs/partners/testing-extension/development-acc#populate-test-data) in it.
 * You have created an [extension](https://partners.fynd.com) in partner panel. if not, you can follow [extension guide](https://partners.fynd.com/help/docs/partners/getting-started/create-extension) to create an extension.
-* Update below environment variable value in `.env` file, This detail you can get from partners panel
+* Update below environment variable value in `.env` file, This details you can get from partners panel
     - EXTENSION_API_KEY:`Extension api key`
     - EXTENSION_API_SECRET: `Extension api secret`
 
