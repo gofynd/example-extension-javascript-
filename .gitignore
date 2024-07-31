@@ -32,3 +32,5 @@ coverage/
 
 # ignore coverage_output.json
 coverage_output.json
+#SQLite DB
+session_storage.db
