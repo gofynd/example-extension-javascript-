@@ -1,4 +1,4 @@
-import { setCompany, getCompany, setApplication, getApplication } from '../../../helper/utils';
+import { setCompany, getCompany, setApplication, getApplication } from '../../helper/utils';
 
 describe('Utils Functions', () => {
   it('Should set and get the company_id correctly', () => {

@@ -2,12 +2,14 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const path = require("path");
-const productRouter = require("./product.router");
-const { setupFdk } = require("fdk-extension-javascript/express");
-const { SQLiteStorage } = require("fdk-extension-javascript/express/storage");
-const { sqliteInstance } = require("./sqlite.init");
+const sqlite3 = require('sqlite3').verbose();
 const serveStatic = require("serve-static");
 const { readFileSync } = require('fs');
+const { setupFdk } = require("fdk-extension-javascript/express");
+const { SQLiteStorage } = require("fdk-extension-javascript/express/storage");
+const sqliteInstance = new sqlite3.Database('session_storage.db');
+const productRouter = express.Router();
+
 
 const fdkExtension = setupFdk({
     api_key: process.env.EXTENSION_API_KEY,
@@ -32,11 +34,10 @@ const fdkExtension = setupFdk({
 });
 
 const STATIC_PATH = process.env.NODE_ENV === 'production'
-    ? path.join(process.cwd(), 'web', 'dist')
-    : path.join(process.cwd(), 'web');
+    ? path.join(process.cwd(), 'frontend', 'dist')
+    : path.join(process.cwd(), 'frontend');
     
 const app = express();
-const healthzRouter = express.Router();
 const platformApiRoutes = fdkExtension.platformApiRoutes;
 
 // Middleware to parse cookies with a secret key
@@ -47,25 +48,37 @@ app.use(bodyParser.json({
     limit: '2mb'
 }));
 
-// Health check route
-healthzRouter.get('/_healthz', (req, res, next) => {
-    res.json({
-        "ok": "ok"
-    });
-});
-
-healthzRouter.get('/_readyz', (req, res, next) => {
-    res.json({
-        "ok": "ok"
-    });
-});
-app.use("/", healthzRouter);
-
 // Serve static files from the Vue dist directory
 app.use(serveStatic(STATIC_PATH, { index: false }));
 
 // FDK extension handler and API routes (extension launch routes)
 app.use("/", fdkExtension.fdkHandler);
+
+productRouter.get('/', async function view(req, res, next) {
+    try {
+        const {
+            platformClient
+        } = req;
+        const data = await platformClient.catalog.getProducts()
+        return res.json(data);
+    } catch (err) {
+        next(err);
+    }
+});
+
+// Get products list for application
+productRouter.get('/application/:application_id', async function view(req, res, next) {
+    try {
+        const {
+            platformClient
+        } = req;
+        const { application_id } = req.params;
+        const data = await platformClient.application(application_id).catalog.getAppProducts()
+        return res.json(data);
+    } catch (err) {
+        next(err);
+    }
+});
 
 // FDK extension api route which has auth middleware and FDK client instance attached to it.
 platformApiRoutes.use('/products', productRouter);

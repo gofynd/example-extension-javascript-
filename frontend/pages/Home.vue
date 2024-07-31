@@ -12,8 +12,8 @@
       </div>
       <div class="description">
         This is an illustrative Platform API call to fetch the list of products
-        in this company. Go to your extension folder’s 'product.router.js'
-        directory to check how to call Platform API and start calling API you
+        in this company. Check your extension folder’s 'server.js'
+        file to know how to call Platform API and start calling API you
         require.
       </div>
     </div> 

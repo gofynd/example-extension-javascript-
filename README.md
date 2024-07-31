@@ -37,11 +37,11 @@ npm install
 
 Using yarn:
 ```
-yarn install --cwd ./web
+yarn install --cwd ./frontend
 ```
 Using npm:
 ```
-npm install --prefix ./web
+npm install --prefix ./frontend
 ```
 
 
@@ -60,11 +60,11 @@ Build frontend.
 
 Using yarn:
 ```
-cd web && yarn run build
+cd frontend && yarn run build
 ```
 Using npm:
 ```
-cd web && npm run build
+cd frontend && npm run build
 ```
 
 

@@ -1,5 +1,5 @@
 {
-  "name": "web",
+  "name": "frontend",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -7,7 +7,7 @@
     "serve": "vite preview",
     "build": "vite build",
     "lint": "vue-cli-service lint",
-    "test": "jest --updateSnapshot --no-cache  --detectOpenHandles --json --outputFile=./coverage/coverage.json"
+    "test": "jest"
   },
   "dependencies": {
     "@gofynd/fdk-client-javascript": "^1.4.7",
