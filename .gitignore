@@ -23,6 +23,7 @@ pnpm-debug.log*
 
 frontend/dist
 
+
 # ignore snapshots
 __snapshots__/
 
