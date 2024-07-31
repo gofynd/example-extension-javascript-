@@ -1,5 +1,7 @@
 
-# Build a Fynd Extension using node.js + vue.js(vue3)
+# Build a Fynd Extension using Node.js + Vue.js(vue3)
+![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
+![Vue.js](https://img.shields.io/badge/vuejs-%2335495e.svg?style=for-the-badge&logo=vuedotjs&logoColor=%234FC08D)
 
 [![Coverage Status][coveralls-badge]]([coveralls-url])
 
