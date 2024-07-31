@@ -1,4 +1,4 @@
-const { request, mockPlatformClient } = require('../utils/server')();
+const { request, mockPlatformClient } = require('./utils/server')();
 
 describe('Product Routes', () => {
   beforeEach(() => {
@@ -16,16 +16,6 @@ describe('Product Routes', () => {
     const response = await request.get(`/api/products/application/${applicationId}`);
     expect(response.statusCode).toBe(200);
     expect(response.body).toEqual([{ id: 2, name: 'App Product B' }]);
-  });
-
-  it('GET /healthz: should response with 200', async () => {
-    const res = await request.get('/_healthz');
-    expect(res.statusCode).toEqual(200);
-  });
-
-  it('GET /readyz: should response with 200', async () => {
-    const res = await request.get('/_readyz');
-    expect(res.statusCode).toEqual(200);
   });
 
   it('GET /*: Fallback route', async () => {

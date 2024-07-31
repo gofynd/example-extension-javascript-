@@ -1,7 +1,7 @@
 'use strict'
 
 import { mount } from '@vue/test-utils'
-import Home from '../../../pages/Home.vue'
+import Home from '../../pages/Home.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import flushPromises from 'flush-promises'
 import axios from 'axios'
