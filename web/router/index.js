@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router"
 import { routeGuard } from "./guard"
-import Home from "../pages/Home"
+import Home from "../pages/Home.vue"
 import NotFound from '../pages/NotFound.vue'
 
 const routes = [
@@ -25,7 +25,7 @@ const routes = [
 
 const router = createRouter({
   history: createWebHistory(),
-  base: process.env.BASE_URL,
+  base: '/',
   routes
 })
 

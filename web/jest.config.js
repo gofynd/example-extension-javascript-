@@ -1,7 +1,6 @@
 module.exports = {
   verbose: true,
   coverageReporters: ["json-summary", "lcov", "cobertura"],
-  moduleFileExtensions: ["js", "json", "vue"],
   setupFiles: ["./jest.init.js"],
   testMatch: ['**/__tests__/**/*.spec.js'],
   transform: {

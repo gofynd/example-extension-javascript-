@@ -6,6 +6,8 @@ const productRouter = require("./product.router");
 const { setupFdk } = require("fdk-extension-javascript/express");
 const { SQLiteStorage } = require("fdk-extension-javascript/express/storage");
 const { sqliteInstance } = require("./sqlite.init");
+const serveStatic = require("serve-static");
+const { readFileSync } = require('fs');
 
 const fdkExtension = setupFdk({
     api_key: process.env.EXTENSION_API_KEY,
@@ -29,6 +31,10 @@ const fdkExtension = setupFdk({
     access_mode: "online"
 });
 
+const STATIC_PATH = process.env.NODE_ENV === 'production'
+    ? path.join(process.cwd(), 'web', 'dist')
+    : path.join(process.cwd(), 'web');
+    
 const app = express();
 const healthzRouter = express.Router();
 const platformApiRoutes = fdkExtension.platformApiRoutes;
@@ -56,7 +62,7 @@ healthzRouter.get('/_readyz', (req, res, next) => {
 app.use("/", healthzRouter);
 
 // Serve static files from the Vue dist directory
-app.use(express.static("../dist"));
+app.use(serveStatic(STATIC_PATH, { index: false }));
 
 // FDK extension handler and API routes (extension launch routes)
 app.use("/", fdkExtension.fdkHandler);
@@ -67,8 +73,10 @@ app.use('/api', platformApiRoutes);
 
 // Serve the Vue app for all other routes
 app.get('*', (req, res) => {
-    res.contentType('text/html');
-    res.sendFile(path.join(__dirname, '../', 'dist/index.html'));
+    return res
+    .status(200)
+    .set("Content-Type", "text/html")
+    .send(readFileSync(path.join(STATIC_PATH, "index.html")));
 });
 
 module.exports = app;

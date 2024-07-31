@@ -21,7 +21,7 @@ pnpm-debug.log*
 *.sln
 *.sw?
 
-/dist
+web/dist
 
 # ignore snapshots
 __snapshots__/
@@ -30,4 +30,4 @@ __snapshots__/
 coverage/
 
 # ignore coverage_output.json
-app/coverage_output.json
+coverage_output.json

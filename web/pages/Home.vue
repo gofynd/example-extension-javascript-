@@ -12,7 +12,7 @@
       </div>
       <div class="description">
         This is an illustrative Platform API call to fetch the list of products
-        in this company. Go to your extension folder’s '/app/routes/'
+        in this company. Go to your extension folder’s 'product.router.js'
         directory to check how to call Platform API and start calling API you
         require.
       </div>

@@ -3,8 +3,15 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon index.js",
+    "start": "npm run start:dev",
+    "start:dev": "nodemon index.js",
+    "start:prod": "NODE_ENV=production node index.js",
     "test": "jest --config jest.config.js --no-cache --detectOpenHandles --json --outputFile=./coverage/coverage.json && node coverage_output.js"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "web/**"
+    ]
   },
   "dependencies": {
     "@gofynd/fdk-client-javascript": "^1.4.7",
@@ -13,11 +20,13 @@
     "cookie-parser": "^1.4.6",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
-    "fdk-extension-javascript": "git+https://github.com/gofynd/fdk-extension-javascript.git#add-sqlite-support-for-storage",
+    "fdk-extension-javascript": "git+https://github.com/gofynd/fdk-extension-javascript.git#v0.7.8",
+    "serve-static": "^1.15.0",
     "sqlite3": "^5.1.7"
   },
   "devDependencies": {
     "axios-mock-adapter": "^1.21.2",
+    "concurrently": "^8.2.2",
     "jest": "^29.7.0",
     "nodemon": "^3.1.4",
     "supertest": "^6.3.0"
