@@ -1,5 +1,5 @@
 {
-    "project": "Backend",
+    "roles": ["frontend"],
     "install": "npm install",
     "dev": "npm run dev"
 }
