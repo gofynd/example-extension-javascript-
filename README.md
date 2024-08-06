@@ -38,11 +38,11 @@ npm install
 
 Using yarn:
 ```shell
-yarn install --cwd ./web/frontend
+yarn install --cwd ./frontend
 ```
 Using npm:
 ```shell
-npm install --prefix ./web/frontend
+npm install --prefix ./frontend
 ```
 
 
@@ -61,11 +61,11 @@ Build frontend.
 
 Using yarn:
 ```shell
-cd web/frontend && yarn run build
+cd frontend && yarn run build
 ```
 Using npm:
 ```shell
-cd web/frontend && npm run build
+cd frontend && npm run build
 ```
 
 ## Database Configuration
