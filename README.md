@@ -19,7 +19,7 @@ To initialize your extension template locally, run the following command:
 ```shell
 fdk extension init
 ```
-Enter your preferred extension name and type, then select the `Node + React.js + SQLite` option.
+Enter your preferred extension name and type, then select the `Node + Vue 3 + SQLite` option.
 
 ## Local Development
 To start local development, execute the following command:
