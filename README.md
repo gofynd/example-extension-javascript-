@@ -19,13 +19,14 @@ To initialize your extension template locally, run the following command:
 ```shell
 fdk extension init
 ```
+Enter your preferred extension name and type, then select the `Node + React.js + SQLite` option.
 
 ## Local Development
 To start local development, execute the following command:
 ```shell
 fdk extension preview
 ```
-This command will provide a partner’s panel URL where you can interact with your extension.
+This command will provide a partner’s panel URL where you can interact with your extension. For more information, please read this [guide](https://github.com/gofynd/fdk-cli?tab=readme-ov-file#extension-commands).
 
 ## Build for production
 Build the frontend using the following commands:
