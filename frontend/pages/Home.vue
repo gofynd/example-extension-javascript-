@@ -1,74 +1,80 @@
 <template>
   <div class="products-container">
-    <div class="title">
-      This is an example extension home page user interface.
-    </div>
-    <div class="section">
-      <div class="heading">
-        Example {{isApplicationLaunch ? "Application API" : "Platform API" }}:
-        <a :href="getDocumentPageLink" target="_blank">{{
-          isApplicationLaunch ? "getAppProducts" : "getProducts"
-        }}</a>
+    <div>
+      <div class="title">
+        This is an example extension home page user interface.
       </div>
-      <div class="description">
-        This is an illustrative Platform API call to fetch the list of products
-        in this company. Check your extension folder’s 'server.js'
-        file to know how to call Platform API and start calling API you
-        require.
-      </div>
-    </div> 
-
-    <loader v-if="pageLoading"></loader>
-    <div v-else>
-      <div
-        v-for="(product, index) in productList"
-        :key="index"
-        class="product-list-container"
-      >
-        <div class="flex-row">
-          <img
-            class="mr-r-12"
-            v-if="product.is_active"
-            src="../assets/green-dot.svg"
-          />
-          <img class="mr-r-12" v-else src="../assets/grey-dot.svg" />
-          <div class="card-avatar mr-r-12">
+      <div class="section">
+        <div class="heading">
+          Example {{isApplicationLaunch ? "Application API" : "Platform API" }}:
+          <a :href="getDocumentPageLink" target="_blank">{{
+            isApplicationLaunch ? "getAppProducts" : "getProducts"
+          }}</a>
+        </div>
+        <div class="description">
+          This is an illustrative Platform API call to fetch the list of products
+          in this company. Check your extension folder’s 'server.js'
+          file to know how to call Platform API and start calling API you
+          require.
+        </div>
+      </div> 
+  
+      <loader v-if="pageLoading"></loader>
+      <div v-else-if="productList.length > 0">
+        <div
+          v-for="(product, index) in productList"
+          :key="index"
+          class="product-list-container"
+        >
+          <div class="flex-row">
             <img
-              :src="productProfileImage(product.media)"
-              @error="getErrorImage()"
-              alt="text"
+              class="mr-r-12"
+              v-if="product.is_active"
+              src="../assets/green-dot.svg"
             />
-          </div>
-          <div class="flex-column">
-            <div class="flex-row">
-              <div class="product-name" :id="`product-name-${index}`">
-                {{ product.name }}
+            <img class="mr-r-12" v-else src="../assets/grey-dot.svg" />
+            <div class="card-avatar mr-r-12">
+              <img
+                :src="productProfileImage(product.media)"
+                @error="getErrorImage()"
+                alt="text"
+              />
+            </div>
+            <div class="flex-column">
+              <div class="flex-row">
+                <div class="product-name" :id="`product-name-${index}`">
+                  {{ product.name }}
+                </div>
+                <div class="product-item-code">|</div>
+                <span v-if="product.item_code" class="product-item-code"
+                  >Item Code:
+                  <span class="cl-RoyalBlue" :id="`product-item-code-${index}`">{{
+                    product.item_code
+                  }}</span></span
+                >
               </div>
-              <div class="product-item-code">|</div>
-              <span v-if="product.item_code" class="product-item-code"
-                >Item Code:
-                <span class="cl-RoyalBlue" :id="`product-item-code-${index}`">{{
-                  product.item_code
-                }}</span></span
+              <div
+                class="product-brand-name"
+                v-if="product.brand"
+                :id="`product-brand-name-${index}`"
               >
-            </div>
-            <div
-              class="product-brand-name"
-              v-if="product.brand"
-              :id="`product-brand-name-${index}`"
-            >
-              {{ product.brand.name }}
-            </div>
-            <div
-              class="product-brand-name"
-              v-if="product.category_slug"
-              :id="`product-category-slug-${index}`"
-            >
-              Category :
-              {{ product.category_slug }}
+                {{ product.brand.name }}
+              </div>
+              <div
+                class="product-brand-name"
+                v-if="product.category_slug"
+                :id="`product-category-slug-${index}`"
+              >
+                Category :
+                {{ product.category_slug }}
+              </div>
             </div>
           </div>
         </div>
+      </div>
+      <div v-else class="button" @click="this.createProducts()">
+        <p class="description"> No products found.</p>
+        <div class="n-button-content">Create products</div>
       </div>
     </div>
   </div>
@@ -123,19 +129,36 @@ export default {
       }
       return profileImg.url;
     },
-    fetchProducts() {
-      this.pageLoading = true;
-      ProductService.getAllProducts()
-        .then(({ data }) => {
-          this.productList = data.items;
-          this.pageLoading = false;
-        })
-        .catch(() => {
-          this.pageLoading = false;
+    async fetchProducts() {
+      try{
+        this.pageLoading = true;
+        const products = await ProductService.getAllProducts();
+        this.productList = products.data.items;
+        this.pageLoading = false;
+      }
+      catch(err){
+        this.pageLoading = false;
           this.$snackbar.global.showError(
             "Failed to fetch the list of products"
           );
-        });
+      }
+    },
+    async createProducts() {
+      try{
+        this.pageLoading = true;
+        await ProductService.createProducts();
+        await new Promise(resolve => setTimeout(resolve, 500));
+        if(this.isApplicationLaunch)
+          await this.fetchApplicationProducts();
+        else
+          await this.fetchProducts();
+      }
+      catch(err){
+        this.pageLoading = false;
+          this.$snackbar.global.showError(
+            "Failed to create products"
+          );
+      }
     },
     fetchApplicationProducts() {
       this.pageLoading = true;
@@ -184,6 +207,7 @@ body {
   border-radius: 12px;
   padding: 24px;
   margin: 24px;
+  min-height: 93vh;
 
   .title {
     font-weight: 700;
@@ -280,5 +304,27 @@ body {
 .cl-RoyalBlue {
   color: #2e31be;
   margin-left: 2px;
+}
+
+.button{
+  height:70vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction:column;
+}
+  
+.n-button-content {
+  width: fit-content;
+  height: fit-content;
+  border-radius: 3px;
+  color: #fff;
+  background-color: #2e31be;
+  padding: 12px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 700;
+  box-sizing: border-box;
+  letter-spacing: .5px;
 }
 </style>

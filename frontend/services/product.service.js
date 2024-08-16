@@ -15,6 +15,9 @@ const ProductService = {
   },
   getAllApplicationProducts(params = {}) {
     return axios.get(urlJoin(EXAMPLE_MAIN_URL, `/api/products/application/${params.application_id}`));
+  },
+  createProducts() {
+    return axios.post(urlJoin(EXAMPLE_MAIN_URL, `/api/products`));
   }
 };
 
