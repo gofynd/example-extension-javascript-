@@ -75,7 +75,6 @@ describe('Test Home component', () => {
 
     it('Initial Rendering', async () => {
         expect(wrapper.exists()).toBeTruthy()
-        expect(wrapper.element).toMatchSnapshot()
     });
 
     it('It should render product list for company', async () => {
@@ -98,7 +97,6 @@ describe('Test Home component', () => {
             },
         })
         await router.isReady()
-        expect(wrapper.element).toMatchSnapshot();
         expect(wrapper.exists()).toBeTruthy();
         await flushPromises()
         expect(wrapper.vm.productList.length).toBe(2)

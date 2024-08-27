@@ -14,7 +14,13 @@ module.exports = {
     moduleFileExtensions: ["js", "vue", "json"],
     collectCoverage: true,
     collectCoverageFrom: [
-      "./**/*.{js,vue}"
+      "./**/*.{js,vue}",
+      "!**/coverage/**",
+      "!**/public/**",
+      '!**/jest.config.js',
+      '!**/babel.config.js',
+      '!**/vite.config.js',
+      '!**/main.js',
     ],
   };
   

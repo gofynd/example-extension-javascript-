@@ -18,7 +18,9 @@
       </div>
     </div> 
 
-    <loader v-if="pageLoading"></loader>
+    <div class="loader" v-if="pageLoading">
+      <img src="../public/assets/gifs/loader.gif" />
+    </div>
     <div v-else>
       <div
         v-for="(product, index) in productList"
@@ -29,9 +31,9 @@
           <img
             class="mr-r-12"
             v-if="product.is_active"
-            src="../assets/green-dot.svg"
+            src="../public/assets/green-dot.svg"
           />
-          <img class="mr-r-12" v-else src="../assets/grey-dot.svg" />
+          <img class="mr-r-12" v-else src="../public/assets/grey-dot.svg" />
           <div class="card-avatar mr-r-12">
             <img
               :src="productProfileImage(product.media)"
@@ -75,22 +77,19 @@
 </template>
 
 <script>
-/* File imports */
-import Loader from "../components/loader.vue";
-
 /* Service imports */
-import ProductService from "../services/product.service.js";
 const DOC_URL_PATH =
   "/help/docs/sdk/latest/platform/company/catalog/#getProducts";
 const DOC_APP_URL_PATH =
   "/help/docs/sdk/latest/platform/application/catalog#getAppProducts";
-import DEFAULT_NO_IMAGE from "../assets/default_icon_listing.png";
+import DEFAULT_NO_IMAGE from "../public/assets/default_icon_listing.png";
+import axios from "axios";
+import urlJoin from "url-join";
+
+const EXAMPLE_MAIN_URL = window.location.origin;
 
 export default {
   name: "fp-extension-homepage",
-  components: {
-    Loader,
-  },
   data() {
     return {
       productList: [],
@@ -111,6 +110,9 @@ export default {
     isApplicationLaunch() {
       return this.$route?.params.application_id ? true : false;
     },
+    getCompanyId(){
+      return this.$route?.params.company_id;
+    },
   },
   methods: {
     productProfileImage(media) {
@@ -125,7 +127,11 @@ export default {
     },
     fetchProducts() {
       this.pageLoading = true;
-      ProductService.getAllProducts()
+      axios.get(urlJoin(EXAMPLE_MAIN_URL, '/api/products'),{
+        headers: {
+          "x-company-id": this.getCompanyId,
+        }
+      })
         .then(({ data }) => {
           this.productList = data.items;
           this.pageLoading = false;
@@ -139,8 +145,10 @@ export default {
     },
     fetchApplicationProducts() {
       this.pageLoading = true;
-      ProductService.getAllApplicationProducts({
-        application_id: this.$route.params.application_id,
+      axios.get(urlJoin(EXAMPLE_MAIN_URL, `/api/products/application/${this.$route.params.application_id}`),{
+        headers: {
+          "x-company-id": this.getCompanyId,
+        }
       })
         .then(({ data }) => {
           this.productList = data.items;
@@ -154,7 +162,7 @@ export default {
         });
     },
     getErrorImage() {
-      return "/src/assets/default_icon_listing.png";
+      return "/src/public/assets/default_icon_listing.png";
     },
   },
 };
@@ -173,6 +181,17 @@ body {
   background-color: #f8f8f8 !important;
   width: 100%;
   height: 100%;
+}
+
+.loader {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  img {
+    height: 100px;
+  }
 }
 
 .products-container {

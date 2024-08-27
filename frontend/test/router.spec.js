@@ -1,7 +1,6 @@
-import Home from '../../../pages/Home.vue';
-import NotFound from '../../../pages/NotFound.vue';
-import { routeGuard } from '../../../router/guard';
-import router from '../../../router';
+import Home from '../pages/Home.vue';
+import NotFound from '../pages/NotFound.vue';
+import router from '../router.js';
 
 describe('Router Configuration', () => {
   it('Should have the correct routes', () => {
@@ -12,14 +11,12 @@ describe('Router Configuration', () => {
     expect(homeRoute).toBeTruthy();
     expect(homeRoute.path).toBe('/company/:company_id/');
     expect(homeRoute.component).toBe(Home);
-    expect(homeRoute.beforeEnter).toBe(routeGuard);
 
     // Check the AppHome route
     const appHomeRoute = routes.find(route => route.name === 'AppHome');
     expect(appHomeRoute).toBeTruthy();
     expect(appHomeRoute.path).toBe('/company/:company_id/application/:application_id');
     expect(appHomeRoute.component).toBe(Home);
-    expect(appHomeRoute.beforeEnter).toBe(routeGuard);
 
     // Check the NotFound route
     const notFoundRoute = routes.find(route => route.name === 'NotFound');
