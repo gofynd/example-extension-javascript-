@@ -29,14 +29,14 @@ const fdkExtension = setupFdk({
             // If task is time taking then process it async on other process.
         }
     },
-    storage: new SQLiteStorage(sqliteInstance,'exapmple-fynd-platform-extension'), // add your prefix
+    storage: new SQLiteStorage(sqliteInstance, 'example-fynd-platform-extension'), // add your prefix
     access_mode: 'online',
     webhook_config: {
         api_path: '/api/webhook-events',
         notification_email: 'dev@fynd.com',
         event_map: {
             'company/product/delete': {
-                'handler': (eventName) => { console.log(eventName) },
+                'handler': (eventName) => { console.log(eventName); },
                 'version': '1'
             }
         }
@@ -65,23 +65,23 @@ app.use(serveStatic(STATIC_PATH, { index: false }));
 app.use('/', fdkExtension.fdkHandler);
 
 // Route to handle webhook events and process it.
-app.post('/api/webhook-events', async function(req, res) {
+app.post('/api/webhook-events', async function (req, res) {
     try {
-      console.log(`Webhook Event: ${req.body.event} received`)
-      await fdkExtension.webhookRegistry.processWebhook(req);
-      return res.status(200).json({'success': true});
-    } catch(err) {
-      console.log(`Error Processing ${req.body.event} Webhook`);
-      return res.status(500).json({'success': false});
+        console.log(`Webhook Event: ${req.body.event} received`);
+        await fdkExtension.webhookRegistry.processWebhook(req);
+        return res.status(200).json({ 'success': true });
+    } catch (err) {
+        console.log(`Error Processing ${req.body.event} Webhook`);
+        return res.status(500).json({ 'success': false });
     }
-})
+});
 
 productRouter.get('/', async function view(req, res, next) {
     try {
         const {
             platformClient
         } = req;
-        const data = await platformClient.catalog.getProducts()
+        const data = await platformClient.catalog.getProducts();
         return res.json(data);
     } catch (err) {
         next(err);
@@ -95,7 +95,7 @@ productRouter.get('/application/:application_id', async function view(req, res, 
             platformClient
         } = req;
         const { application_id } = req.params;
-        const data = await platformClient.application(application_id).catalog.getAppProducts()
+        const data = await platformClient.application(application_id).catalog.getAppProducts();
         return res.json(data);
     } catch (err) {
         next(err);
@@ -112,9 +112,9 @@ app.use('/api', platformApiRoutes);
 // Serve the Vue app for all other routes
 app.get('*', (req, res) => {
     return res
-    .status(200)
-    .set('Content-Type', 'text/html')
-    .send(readFileSync(path.join(STATIC_PATH, 'index.html')));
+        .status(200)
+        .set('Content-Type', 'text/html')
+        .send(readFileSync(path.join(STATIC_PATH, 'index.html')));
 });
 
 module.exports = app;
